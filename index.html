@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Uninter — Verificação de Diploma</title>
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --card: #ffffff;
+      --accent: #b30000;
+      --muted: #6b7280;
+      --success: #16a34a;
+      --error: #dc2626;
+      --border: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, Arial, sans-serif;
+      background: var(--bg);
+      color: #111827;
+    }
+
+    header, footer {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 16px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .wrap {
+      max-width: 960px;
+      margin: auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.04);
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    button {
+      padding: 12px 18px;
+      border-radius: 8px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .status {
+      display: inline-block;
+      background: #ecfdf5;
+      color: var(--success);
+      border: 1px solid #bbf7d0;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .error {
+      color: var(--error);
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .field {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .label {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .value {
+      font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .field {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Centro Universitário Internacional — Uninter</h1>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="card">
+    <h3>Verificação de Diploma</h3>
+    <input type="text" id="codigo" placeholder="Digite o número de registro">
+    <button onclick="verificar()">Verificar</button>
+    <div id="erro" class="error"></div>
+  </div>
+
+  <div class="card" id="resultado" style="display:none">
+    <div class="status">● Diploma Ativo</div>
+
+    <div class="field">
+      <div class="label">Nome do(a) Diplomado(a)</div>
+      <div class="value" id="nome"></div>
+    </div>
+
+    <div class="field">
+      <div class="label">Instituição</div>
+      <div class="value" id="instituicao"></div>
+    </div>
+
+    <div class="field">
+      <div class="label">Curso</div>
+      <div class="value" id="curso"></div>
+    </div>
+
+    <div class="field">
+      <div class="label">Conclusão</div>
+      <div class="value" id="conclusao"></div>
+    </div>
+
+    <div class="field">
+      <div class="label">Registro</div>
+      <div class="value" id="registro"></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between;">
+    <span>Sistema de Verificação de Diplomas</span>
+    <span>© Uninter</span>
+  </div>
+</footer>
+
+<script>
+  const diplomas = {
+    "2643208-87": {
+      nome: "Eliane da Silva",
+      instituicao: "Centro Universitário Internacional — Uninter",
+      curso: "Bacharel em Enfermagem",
+      conclusao: "15/04/2025",
+      registro: "2643208-87"
+    }
+  };
+
+  function verificar() {
+    const codigo = document.getElementById("codigo").value.trim();
+    const erro = document.getElementById("erro");
+    const resultado = document.getElementById("resultado");
+
+    if (diplomas[codigo]) {
+      const d = diplomas[codigo];
+      document.getElementById("nome").innerText = d.nome;
+      document.getElementById("instituicao").innerText = d.instituicao;
+      document.getElementById("curso").innerText = d.curso;
+      document.getElementById("conclusao").innerText = d.conclusao;
+      document.getElementById("registro").innerText = d.registro;
+
+      resultado.style.display = "block";
+      erro.innerText = "";
+    } else {
+      resultado.style.display = "none";
+      erro.innerText = "Registro não encontrado.";
+    }
+  }
+</script>
+
+</body>
+</html>
